@@ -1,5 +1,5 @@
 import os
-from technology_specific_extractors.aws_messaging.scip_resolver import ScipIndex
+from core.scip_resolver import ScipIndex
 
 FIXTURE = os.path.join(os.path.dirname(__file__), "fixtures", "scip_sample.json")
 

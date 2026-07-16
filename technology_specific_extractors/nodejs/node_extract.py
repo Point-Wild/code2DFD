@@ -9,7 +9,7 @@ import core.technology_switch as tech_sw
 import tmp.tmp as tmp
 import output_generators.traceability as traceability
 from output_generators.logger import logger
-from technology_specific_extractors.aws_messaging.scip_resolver import ScipIndex
+from core.scip_resolver import ScipIndex
 
 _INDEX = None
 _TRIED = False
@@ -30,11 +30,30 @@ def scip_index():
     return _INDEX
 
 
+def _grep_sites(dfd, keyword):
+    """Grep fallback: first line per file that mentions `keyword`,
+    as [(service, rel_path, line, span)]."""
+    out = []
+    for f in fi.search_keywords(keyword).values():
+        service = tech_sw.detect_microservice(f["path"], dfd)
+        for i, line in enumerate(f["content"]):
+            if keyword in line:
+                m = re.search(re.escape(keyword), line)
+                out.append((service, f["path"], i, m.span() if m else (0, 0)))
+                break
+    return out
+
+
 def usage_sites(dfd, command_class, client_class=None, descriptor_suffix="#"):
     """[(service, rel_path, line, span)] where command_class is used.
 
     `descriptor_suffix` is "#" for classes (default) or "" for free functions
-    (e.g. node:crypto's createHmac, which has no class descriptor)."""
+    (e.g. node:crypto's createHmac, which has no class descriptor).
+
+    SCIP-first: with an index loaded, resolve by symbol. If the index yields no
+    occurrence for the descriptor -- e.g. a package moniker like `axios`, or a
+    free function the suffix doesn't match -- fall back to grep for that query
+    rather than returning nothing (the fallback is per-query, not all-or-nothing)."""
     index = scip_index()
     if index is not None:
         by_file = {}
@@ -50,16 +69,10 @@ def usage_sites(dfd, command_class, client_class=None, descriptor_suffix="#"):
         for rel_path in sorted(set(by_file) | set(cmd_by_file)):
             occ = by_file.get(rel_path) or cmd_by_file[rel_path]
             out.append((tech_sw.detect_microservice(rel_path, dfd), rel_path, occ.line, occ.span))
-        return out
-    out = []
-    for f in fi.search_keywords(command_class).values():
-        service = tech_sw.detect_microservice(f["path"], dfd)
-        for i, line in enumerate(f["content"]):
-            if command_class in line:
-                m = re.search(re.escape(command_class), line)
-                out.append((service, f["path"], i, m.span() if m else (0, 0)))
-                break
-    return out
+        if out:
+            return out
+        # descriptor absent from the index -> per-query grep fallback
+    return _grep_sites(dfd, command_class)
 
 
 def read_flows():
