@@ -19,7 +19,7 @@ COMMUNICATIONS_TECH_LIST = '[("RabbitMQ", "rmq"), ("Kafka", "kfk"), ("RestTempla
                             ("AWS Services", "awssvc"), ("HTTP Server", "hsv"),\
                             ("Crypto Inventory", "cry"), ("HTTP Client", "hcl"),\
                             ("Node Databases", "dbn"), ("Kafka Node", "kfn"),\
-                            ("RabbitMQ Node", "rmn")]'
+                            ("RabbitMQ Node", "rmn"), ("BullMQ Node", "bmq")]'
 DEFAULT_CONFIG = ConfigParser()
 for section in CONFIG_SECTIONS:
     DEFAULT_CONFIG.add_section(section)

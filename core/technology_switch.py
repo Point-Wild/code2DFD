@@ -9,6 +9,7 @@ import technology_specific_extractors.http_client.hcl_entry as hcl
 import technology_specific_extractors.databases_node.dbn_entry as dbn
 import technology_specific_extractors.kafka_node.kfn_entry as kfn
 import technology_specific_extractors.rabbitmq_node.rmn_entry as rmn
+import technology_specific_extractors.bullmq_node.bmq_entry as bmq
 import technology_specific_extractors.database_connections.dbc_entry as dbc
 import technology_specific_extractors.docker_compose.dcm_entry as dcm
 import technology_specific_extractors.feign_client.fgn_entry as fgn
