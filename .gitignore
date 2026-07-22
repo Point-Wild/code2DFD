@@ -1,6 +1,6 @@
+.venv/
+code2DFD_output/
+__pycache__/
 *.pyc
-*.DS_Store
-.vscode/
+.pytest_cache/
 analysed_repositories/
-code2DFD_output/*
-output/*

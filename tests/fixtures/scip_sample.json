@@ -1,0 +1,25 @@
+{
+  "metadata": {"tool_info": {"name": "scip-typescript"}},
+  "documents": [
+    {
+      "relative_path": "services/publisher/src/sns.ts",
+      "occurrences": [
+        {"symbol": "scip-typescript npm breakpoint 1.0.0 services/publisher/src/`sns.ts`/", "range": [0, 0, 0], "symbol_roles": 1},
+        {"symbol": "scip-typescript npm @aws-sdk/client-sns 3.1075.0 dist-types/commands/`PublishCommand.d.ts`/PublishCommand#", "range": [0, 9, 23], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm @aws-sdk/client-sns 3.1075.0 dist-types/`SNSClient.d.ts`/SNSClient#", "range": [0, 25, 34], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm @aws-sdk/client-sns 3.1075.0 dist-types/`SNSClient.d.ts`/SNSClient#`<constructor>`().", "range": [2, 19, 28], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm breakpoint 1.0.0 services/publisher/src/`sns.ts`/client.", "range": [2, 6, 12], "symbol_roles": 1},
+        {"symbol": "scip-typescript npm breakpoint 1.0.0 services/publisher/src/`sns.ts`/client.", "range": [17, 20, 26], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm @smithy/core 3.26.0 dist-types/submodules/client/smithy-client/`client.d.ts`/Client#send().", "range": [17, 27, 31], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm @aws-sdk/client-sns 3.1075.0 dist-types/commands/`PublishCommand.d.ts`/PublishCommand#", "range": [18, 8, 22], "symbol_roles": 0},
+        {"symbol": "scip-typescript npm @aws-sdk/client-sns 3.1075.0 dist-types/`SNSClient.d.ts`/ClientDefaults#region.", "range": [3, 2, 8], "symbol_roles": 0}
+      ]
+    },
+    {
+      "relative_path": "services/publisher/src/index.ts",
+      "occurrences": [
+        {"symbol": "scip-typescript npm breakpoint 1.0.0 services/publisher/src/`sns.ts`/", "range": [3, 30, 37], "symbol_roles": 0}
+      ]
+    }
+  ]
+}

@@ -15,7 +15,11 @@ CONFIG_SECTIONS = ["Analysis Settings", "Repository", "Technology Profiles", "DF
 COMMUNICATIONS_TECH_LIST = '[("RabbitMQ", "rmq"), ("Kafka", "kfk"), ("RestTemplate", "rst"),\
                             ("FeignClient", "fgn"), ("Implicit Connections", "imp"),\
                             ("Database Connections", "dbc"), ("HTML", "html"),\
-                            ("Docker-Compose", "dcm")]'
+                            ("Docker-Compose", "dcm"), ("AWS SNS/SQS", "aws"),\
+                            ("AWS Services", "awssvc"), ("HTTP Server", "hsv"),\
+                            ("Crypto Inventory", "cry"), ("HTTP Client", "hcl"),\
+                            ("Node Databases", "dbn"), ("Kafka Node", "kfn"),\
+                            ("RabbitMQ Node", "rmn"), ("BullMQ Node", "bmq")]'
 DEFAULT_CONFIG = ConfigParser()
 for section in CONFIG_SECTIONS:
     DEFAULT_CONFIG.add_section(section)

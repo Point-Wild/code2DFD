@@ -24,7 +24,7 @@ def detection_comment(file_name, line):
     """
 
     language = os.path.splitext(file_name)[1]
-    return (language == ".js" and line.replace(" ", "")[:2] == "//") or (
+    return (language in (".js", ".ts") and line.replace(" ", "")[:2] == "//") or (
             language == ".java" and line.replace(" ", "")[:2] == "//") or (
             language == ".yml" and line.replace(" ", "")[:1] == "#")
 
@@ -57,6 +57,17 @@ def extract_variable(line, submodule):
     return line.split("=")[0].strip().split()[-1] if "=" in line else line.split(";")[0].strip().split()[-1]
 
 
+def grep_command(keyword: str, repo_folder: str) -> list:
+    """Builds the grep argument list, excluding vendored/build/vcs dirs."""
+    return [
+        "grep", "-rn",
+        "--exclude-dir=node_modules",
+        "--exclude-dir=dist",
+        "--exclude-dir=.git",
+        keyword, repo_folder,
+    ]
+
+
 def search_keywords(keywords: str):
     """Searches keywords locally using grep.
     """
@@ -71,7 +82,7 @@ def search_keywords(keywords: str):
     for keyword in keywords:
         if keyword[-1] == "(":
             keyword = "\"" + keyword + "\""
-        out = subprocess.Popen(['grep', '-rn', keyword, repo_folder], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        out = subprocess.Popen(grep_command(keyword, repo_folder), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = out.communicate()
         seen = set()
         for line in stdout.decode().splitlines():
