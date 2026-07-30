@@ -370,7 +370,8 @@ def check_dockerfile(build_path: str):
                         with open(entry.path, "r") as file:
                             lines = file.readlines()
                 elif entry.is_dir():
-                    dirs.append(os.scandir(entry.path))
+                    if entry.name not in ("node_modules", "dist", ".git"):
+                        dirs.append(os.scandir(entry.path))
 
     return lines
 
@@ -391,7 +392,8 @@ def file_exists(file_name: str) -> bool:
                 if entry.name.casefold() == file_name:
                     return True
             elif entry.is_dir():
-                dirs.append(os.scandir(entry.path))
+                if entry.name not in ("node_modules", "dist", ".git"):
+                    dirs.append(os.scandir(entry.path))
 
     return False
 
@@ -426,7 +428,7 @@ def get_file_as_yaml(filename: str) -> dict:
     files = dict()
 
     local_path = tmp.tmp_config["Repository"]["local_path"]
-    out = subprocess.Popen(['find', local_path, '-name', filename], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    out = subprocess.Popen(['find', local_path, '(', '-name', 'node_modules', '-o', '-name', 'dist', '-o', '-name', '.git', ')', '-prune', '-o', '-name', filename, '-type', 'f', '-print'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = out.communicate()
 
     if stdout:
@@ -449,7 +451,7 @@ def get_file_as_lines(filename: str) -> dict:
     files = dict()
 
     local_path = tmp.tmp_config["Repository"]["local_path"]
-    out = subprocess.Popen(['find', local_path, '-name', filename], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    out = subprocess.Popen(['find', local_path, '(', '-name', 'node_modules', '-o', '-name', 'dist', '-o', '-name', '.git', ')', '-prune', '-o', '-name', filename, '-type', 'f', '-print'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = out.communicate()
 
     if stdout:
